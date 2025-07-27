@@ -1,0 +1,29 @@
+{
+  "name": "RoboNeura - AI, ML, Computer Vision & IoT Solutions",
+  "short_name": "RoboNeura",
+  "description": "Transform your business with cutting-edge AI, Machine Learning, Computer Vision, and IoT solutions. Hardware precision meets software intelligence.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0D1B2A",
+  "theme_color": "#00D1FF",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "src/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "src/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity", "technology"],
+  "lang": "en",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false
+} 

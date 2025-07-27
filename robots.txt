@@ -1,0 +1,31 @@
+User-agent: *
+Allow: /
+
+# Allow all search engines to crawl the site
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Disallow crawling of private/development files
+Disallow: /.git/
+Disallow: /.vercel/
+Disallow: /node_modules/
+Disallow: /.DS_Store
+Disallow: /package-lock.json
+
+# Allow crawling of important files
+Allow: /sitemap.xml
+Allow: /robots.txt
+Allow: /src/
+Allow: /model/
+
+# Sitemap location
+Sitemap: https://roboneura.com/sitemap.xml
+
+# Crawl delay (optional - be respectful to server resources)
+Crawl-delay: 1 

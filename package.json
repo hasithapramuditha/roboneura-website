@@ -12,7 +12,8 @@
     "setup": "./scripts/setup-vercel.sh",
     "lint": "echo 'No linting configured - add your linting tools here'",
     "test": "echo 'No tests configured - add your test framework here'",
-    "quality-check": "npm run lint && npm run test"
+    "quality-check": "npm run lint && npm run test",
+    "seo-check": "node scripts/seo-check.js"
   },
   "keywords": [
     "ai",
