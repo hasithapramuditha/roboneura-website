@@ -638,27 +638,280 @@
       opacity: 0.8;
     }
 
-    /* Responsive */
-    @media (max-width: 768px) {
-      .nav-menu {
-        display: none;
-      }
-      
+    /* Mobile Navigation */
+    .mobile-menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: #FFFFFF;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    .mobile-menu-toggle:hover {
+      color: #00D1FF;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
       .hero-container {
-        grid-template-columns: 1fr;
-        text-align: center;
+        gap: 2rem;
+        padding: 0 1rem;
       }
       
       .hero-content h1 {
-        font-size: 2.5rem;
+        font-size: 3rem;
       }
       
-      .contact-grid {
+      .solutions-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+      }
+      
+      .container {
+        padding: 0 1rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      /* Header & Navigation */
+      .nav-menu {
+        display: none;
+        position: fixed;
+        top: 80px;
+        left: 0;
+        right: 0;
+        background: #0D1B2A;
+        flex-direction: column;
+        padding: 2rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        z-index: 999;
+      }
+
+      .nav-menu.active {
+        display: flex;
+      }
+
+      .nav-menu li {
+        margin: 1rem 0;
+      }
+
+      .nav-menu a {
+        font-size: 1.1rem;
+        padding: 0.5rem 0;
+        display: block;
+      }
+
+      .mobile-menu-toggle {
+        display: block;
+      }
+
+      .cta-buttons {
+        display: none;
+      }
+
+      /* Hero Section */
+      .hero-container {
         grid-template-columns: 1fr;
+        text-align: center;
+        gap: 2rem;
+        padding: 0 1rem;
+      }
+      
+      .hero-content h1 {
+        font-size: 2.2rem;
+        line-height: 1.3;
+      }
+
+      .hero-content p {
+        font-size: 1.1rem;
+      }
+
+      .hero-buttons {
+        justify-content: center;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .hero-buttons .btn {
+        width: 100%;
+        max-width: 300px;
+        text-align: center;
       }
       
       .hero-3d {
-        height: 300px;
+        height: 250px;
+        order: -1;
+      }
+
+      /* Sections */
+      .section {
+        padding: 3rem 0;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .section-subtitle {
+        font-size: 1.1rem;
+      }
+
+      /* Solutions Grid */
+      .solutions-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .solution-card {
+        padding: 1.5rem;
+      }
+
+      .solution-card h3 {
+        font-size: 1.3rem;
+      }
+
+      /* Contact Grid */
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      /* Footer */
+      .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 2rem;
+      }
+
+      .footer-links {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-content h1 {
+        font-size: 1.8rem;
+      }
+
+      .hero-content p {
+        font-size: 1rem;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+      }
+
+      .solution-card {
+        padding: 1rem;
+      }
+
+      .solution-card i {
+        font-size: 2.5rem;
+      }
+
+      .hero-3d {
+        height: 200px;
+      }
+
+      .nav-container {
+        padding: 0 1rem;
+      }
+    }
+
+    /* Touch-friendly interactions */
+    @media (hover: none) and (pointer: coarse) {
+      .solution-card:hover {
+        transform: none;
+      }
+
+      .btn:hover {
+        transform: none;
+      }
+
+      .btn:active {
+        transform: scale(0.98);
+      }
+
+      .solution-card:active {
+        transform: scale(0.98);
+      }
+
+      /* Better touch targets */
+      .nav-menu a {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .mobile-menu-toggle {
+        min-width: 44px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Prevent text selection on interactive elements */
+      .btn, .solution-card, .nav-menu a {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      /* Add visual feedback for touch */
+      .btn:active, .solution-card:active {
+        background-color: rgba(0, 209, 255, 0.1);
+      }
+    }
+
+    /* Mobile-specific improvements */
+    @media (max-width: 768px) {
+      /* Prevent horizontal scroll */
+      body {
+        overflow-x: hidden;
+      }
+
+      /* Better spacing for mobile */
+      .section {
+        padding: 2rem 0;
+      }
+
+      /* Improve button touch targets */
+      .btn {
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Better mobile navigation */
+      .nav-menu {
+        transition: all 0.3s ease;
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+
+      .nav-menu.active {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      /* Mobile menu backdrop */
+      .nav-menu::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: -1;
       }
     }
 
@@ -687,7 +940,7 @@
         <img src="src/logo.png" alt="RoboNeura Logo" style="height: 40px; margin-right: 0.5rem;">
         RoboNeura
       </a>
-      <ul class="nav-menu">
+      <ul class="nav-menu" id="nav-menu">
         <li><a href="#home">Home</a></li>
         <li><a href="#solutions">Solutions</a></li>
         <li><a href="#services">Services</a></li>
@@ -699,6 +952,9 @@
         <a href="#contact" class="btn btn-secondary">Request a Demo</a>
         <a href="#contact" class="btn btn-primary">Contact Sales</a>
       </div>
+      <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle mobile menu">
+        <i class="fas fa-bars"></i>
+      </button>
     </nav>
   </header>
 
@@ -1389,6 +1645,115 @@
       el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
       observer.observe(el);
     });
+
+    // Mobile Navigation
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    const mobileMenuIcon = mobileMenuToggle.querySelector('i');
+
+    // Toggle mobile menu
+    mobileMenuToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+      
+      // Change icon
+      if (navMenu.classList.contains('active')) {
+        mobileMenuIcon.classList.remove('fa-bars');
+        mobileMenuIcon.classList.add('fa-times');
+      } else {
+        mobileMenuIcon.classList.remove('fa-times');
+        mobileMenuIcon.classList.add('fa-bars');
+      }
+    });
+
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+        mobileMenuIcon.classList.remove('fa-times');
+        mobileMenuIcon.classList.add('fa-bars');
+      });
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!navMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+        navMenu.classList.remove('active');
+        mobileMenuIcon.classList.remove('fa-times');
+        mobileMenuIcon.classList.add('fa-bars');
+      }
+    });
+
+    // Handle touch events for mobile
+    let touchStartY = 0;
+    let touchEndY = 0;
+
+    document.addEventListener('touchstart', (e) => {
+      touchStartY = e.changedTouches[0].screenY;
+    });
+
+    document.addEventListener('touchend', (e) => {
+      touchEndY = e.changedTouches[0].screenY;
+      handleSwipe();
+    });
+
+    function handleSwipe() {
+      const swipeThreshold = 50;
+      const diff = touchStartY - touchEndY;
+
+      if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+          // Swipe up - could be used for navigation
+          console.log('Swipe up detected');
+        } else {
+          // Swipe down - could close mobile menu
+          if (navMenu.classList.contains('active')) {
+            navMenu.classList.remove('active');
+            mobileMenuIcon.classList.remove('fa-times');
+            mobileMenuIcon.classList.add('fa-bars');
+          }
+        }
+      }
+    }
+
+    // Optimize 3D model for mobile
+    function optimizeForMobile() {
+      if (window.innerWidth <= 768) {
+        // Reduce render quality on mobile for better performance
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        
+        // Disable shadows on mobile for better performance
+        renderer.shadowMap.enabled = false;
+        
+        // Reduce animation complexity
+        controls.enableDamping = false;
+      } else {
+        // Restore full quality on desktop
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.shadowMap.enabled = true;
+        controls.enableDamping = true;
+      }
+    }
+
+    // Call optimization on load and resize
+    optimizeForMobile();
+    window.addEventListener('resize', optimizeForMobile);
+
+    // Add touch support for 3D model interaction
+    if ('ontouchstart' in window) {
+      // Disable mouse tracking on touch devices
+      window.removeEventListener('mousemove', (event) => {
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+      });
+
+      // Add touch tracking instead
+      window.addEventListener('touchmove', (event) => {
+        event.preventDefault();
+        const touch = event.touches[0];
+        mouse.x = (touch.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(touch.clientY / window.innerHeight) * 2 + 1;
+      });
+    }
   </script>
 </body>
 </html>
