@@ -1,0 +1,33 @@
+{
+  "name": "roboneura-website",
+  "version": "1.0.0",
+  "description": "RoboNeura - Merging Hardware Precision with Software Intelligence",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "echo 'Static site - no build required'",
+    "start": "npx serve .",
+    "deploy": "vercel --prod",
+    "deploy:preview": "vercel",
+    "setup": "./scripts/setup-vercel.sh",
+    "lint": "echo 'No linting configured - add your linting tools here'",
+    "test": "echo 'No tests configured - add your test framework here'",
+    "quality-check": "npm run lint && npm run test"
+  },
+  "keywords": [
+    "ai",
+    "ml",
+    "iot",
+    "computer-vision",
+    "robotics",
+    "technology"
+  ],
+  "author": "RoboNeura",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+} 

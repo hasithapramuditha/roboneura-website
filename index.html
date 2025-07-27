@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RoboNeura - Merging Hardware Precision with Software Intelligence</title>
+  <link rel="icon" type="image/png" href="src/logo.png">
+  <link rel="shortcut icon" type="image/png" href="src/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: #2E2E2E;
+      background-color: #F5F5F5;
+    }
+
+    /* Header */
+    .header {
+      background: #0D1B2A;
+      padding: 1rem 0;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      color: #FFFFFF;
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .logo i {
+      color: #00D1FF;
+      margin-right: 0.5rem;
+      font-size: 1.8rem;
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-menu a {
+      color: #FFFFFF;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-menu a:hover {
+      color: #00D1FF;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: #00D1FF;
+      color: #0D1B2A;
+    }
+
+    .btn-primary:hover {
+      background: #00B8E6;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #FFFFFF;
+      border: 2px solid #00D1FF;
+    }
+
+    .btn-secondary:hover {
+      background: #00D1FF;
+      color: #0D1B2A;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #0D1B2A 0%, #1B263B 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%2300D1FF" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+      opacity: 0.3;
+    }
+
+    .hero-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-content h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+
+    .hero-content h1 span {
+      color: #00D1FF;
+    }
+
+    .hero-content p {
+      font-size: 1.25rem;
+      color: #F5F5F5;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-3d {
+      position: relative;
+      height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #robot-container {
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 209, 255, 0.3);
+    }
+
+    /* Sections */
+    .section {
+      padding: 5rem 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #0D1B2A;
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      font-size: 1.25rem;
+      color: #2E2E2E;
+      margin-bottom: 3rem;
+      opacity: 0.8;
+    }
+
+    /* Solutions Grid */
+    .solutions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .solution-card {
+      background: #FFFFFF;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .solution-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      border-color: #00D1FF;
+    }
+
+    .solution-card i {
+      font-size: 3rem;
+      color: #00D1FF;
+      margin-bottom: 1rem;
+    }
+
+    .solution-card h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #0D1B2A;
+      margin-bottom: 1rem;
+    }
+
+    .solution-card p {
+      color: #2E2E2E;
+      opacity: 0.8;
+    }
+
+    /* Industries */
+    .industries-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .industry-card {
+      background: #FFFFFF;
+      padding: 2rem;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .industry-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    .industry-card i {
+      font-size: 2.5rem;
+      color: #00D1FF;
+      margin-bottom: 1rem;
+    }
+
+    .industry-card h4 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #0D1B2A;
+    }
+
+    /* Tech Stack */
+    .tech-stack {
+      background: #0D1B2A;
+      color: #FFFFFF;
+    }
+
+    .tech-categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .tech-category {
+      background: #1B263B;
+      padding: 2rem;
+      border-radius: 16px;
+      border: 1px solid #00D1FF;
+    }
+
+    .tech-category h3 {
+      color: #00D1FF;
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
+    }
+
+    .tech-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tech-item {
+      background: #00D1FF;
+      color: #0D1B2A;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    /* Case Studies */
+    .case-studies-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .case-study {
+      background: #FFFFFF;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .case-study:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .case-study-image {
+      height: 200px;
+      background: linear-gradient(135deg, #00D1FF, #1B263B);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      font-size: 3rem;
+    }
+
+    .case-study-content {
+      padding: 2rem;
+    }
+
+    .case-study h3 {
+      color: #0D1B2A;
+      margin-bottom: 1rem;
+    }
+
+    .case-study p {
+      color: #2E2E2E;
+      opacity: 0.8;
+      margin-bottom: 1rem;
+    }
+
+    .results {
+      background: #F5F5F5;
+      padding: 1rem;
+      border-radius: 8px;
+      border-left: 4px solid #00D1FF;
+    }
+
+    /* Contact */
+    .contact {
+      background: #0D1B2A;
+      color: #FFFFFF;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-top: 3rem;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-group label {
+      font-weight: 500;
+      color: #F5F5F5;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      padding: 1rem;
+      border: none;
+      border-radius: 8px;
+      background: #1B263B;
+      color: #FFFFFF;
+      font-family: inherit;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: #F5F5F5;
+      opacity: 0.7;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .contact-item i {
+      color: #00D1FF;
+      font-size: 1.5rem;
+    }
+
+    /* Footer */
+    .footer {
+      background: #1B263B;
+      color: #FFFFFF;
+      padding: 3rem 0 1rem;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-section h3 {
+      color: #00D1FF;
+      margin-bottom: 1rem;
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-section ul li a {
+      color: #F5F5F5;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-section ul li a:hover {
+      color: #00D1FF;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #2E2E2E;
+      padding-top: 1rem;
+      text-align: center;
+      color: #F5F5F5;
+      opacity: 0.8;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+      }
+      
+      .hero-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+      
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .hero-3d {
+        height: 300px;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in-up {
+      animation: fadeInUp 0.6s ease-out;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <nav class="nav-container">
+      <a href="#" class="logo">
+        <img src="src/logo.png" alt="RoboNeura Logo" style="height: 40px; margin-right: 0.5rem;">
+        RoboNeura
+      </a>
+      <ul class="nav-menu">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#solutions">Solutions</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#careers">Careers</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="cta-buttons">
+        <a href="#contact" class="btn btn-secondary">Request a Demo</a>
+        <a href="#contact" class="btn btn-primary">Contact Sales</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="hero-container">
+      <div class="hero-content fade-in-up">
+        <h1>Merging Hardware Precision with <span>Software Intelligence</span></h1>
+        <p>We provide full-stack AI, ML, CV, and IoT solutions tailored for your digital transformation.</p>
+        <div class="hero-buttons">
+          <a href="#solutions" class="btn btn-primary">Explore Our Services</a>
+          <a href="#contact" class="btn btn-secondary">Talk to an Expert</a>
+        </div>
+      </div>
+      <div class="hero-3d fade-in-up">
+        <div id="robot-container"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solutions Section -->
+  <section id="solutions" class="section">
+    <div class="container">
+      <h2 class="section-title">What We Build</h2>
+      <p class="section-subtitle">Comprehensive solutions for the digital age</p>
+      <div class="solutions-grid">
+        <div class="solution-card">
+          <i class="fas fa-brain"></i>
+          <h3>AI & Machine Learning</h3>
+          <p>Predictive systems, advanced models, and optimization algorithms that drive intelligent decision-making.</p>
+        </div>
+        <div class="solution-card">
+          <i class="fas fa-eye"></i>
+          <h3>Computer Vision</h3>
+          <p>Object detection, OCR, face recognition, and visual analytics for automated image processing.</p>
+        </div>
+        <div class="solution-card">
+          <i class="fas fa-network-wired"></i>
+          <h3>IoT Systems</h3>
+          <p>Smart devices, embedded systems, and edge computing solutions for connected environments.</p>
+        </div>
+        <div class="solution-card">
+          <i class="fas fa-code"></i>
+          <h3>Custom Software Engineering</h3>
+          <p>Web, mobile, and embedded platforms tailored to your specific business requirements.</p>
+        </div>
+        <div class="solution-card">
+          <i class="fas fa-cogs"></i>
+          <h3>Automation & Robotics</h3>
+          <p>Hardware integrations and real-time control systems for industrial automation.</p>
+        </div>
+        <div class="solution-card">
+          <i class="fas fa-chart-line"></i>
+          <h3>Data Analytics</h3>
+          <p>Advanced analytics and business intelligence solutions to unlock insights from your data.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="section" style="background: #FFFFFF;">
+    <div class="container">
+      <h2 class="section-title">Our Services</h2>
+      <p class="section-subtitle">End-to-end solutions for your digital transformation</p>
+      <div class="solutions-grid">
+        <div class="solution-card">
+          <i class="fas fa-cogs"></i>
+          <h3>Consulting & Strategy</h3>
+          <p>Expert guidance on AI adoption, digital transformation roadmaps, and technology strategy development.</p>
+        </div>
+        <div class="solution-card">
+          <i class="fas fa-rocket"></i>
+          <h3>Custom Development</h3>
+          <p>Tailored software solutions, from concept to deployment, built specifically for your business needs.</p>
+        </div>
+        <div class="solution-card">
+          <i class="fas fa-cloud"></i>
+          <h3>Cloud & Infrastructure</h3>
+          <p>Scalable cloud solutions, DevOps implementation, and infrastructure optimization for modern applications.</p>
+        </div>
+        <div class="solution-card">
+          <i class="fas fa-shield-alt"></i>
+          <h3>Security & Compliance</h3>
+          <p>Cybersecurity solutions, data protection, and compliance frameworks for enterprise-grade security.</p>
+        </div>
+        <div class="solution-card">
+          <i class="fas fa-graduation-cap"></i>
+          <h3>Training & Support</h3>
+          <p>Comprehensive training programs and ongoing support to ensure successful technology adoption.</p>
+        </div>
+        <div class="solution-card">
+          <i class="fas fa-tools"></i>
+          <h3>Maintenance & Optimization</h3>
+          <p>Continuous monitoring, performance optimization, and system maintenance for optimal operation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Industries Section -->
+  <section class="section" style="background: #F5F5F5;">
+    <div class="container">
+      <h2 class="section-title">Industries We Serve</h2>
+      <p class="section-subtitle">Transforming businesses across sectors</p>
+      <div class="industries-grid">
+        <div class="industry-card">
+          <i class="fas fa-industry"></i>
+          <h4>Manufacturing</h4>
+        </div>
+        <div class="industry-card">
+          <i class="fas fa-heartbeat"></i>
+          <h4>Healthcare</h4>
+        </div>
+        <div class="industry-card">
+          <i class="fas fa-city"></i>
+          <h4>Smart Cities</h4>
+        </div>
+        <div class="industry-card">
+          <i class="fas fa-truck"></i>
+          <h4>Logistics</h4>
+        </div>
+        <div class="industry-card">
+          <i class="fas fa-seedling"></i>
+          <h4>Agriculture</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Stack Section -->
+  <section class="section tech-stack">
+    <div class="container">
+      <h2 class="section-title" style="color: #FFFFFF;">Our Tech Stack</h2>
+      <p class="section-subtitle" style="color: #F5F5F5;">Cutting-edge technologies we leverage</p>
+      <div class="tech-categories">
+        <div class="tech-category">
+          <h3>AI/ML</h3>
+          <div class="tech-list">
+            <span class="tech-item">TensorFlow</span>
+            <span class="tech-item">PyTorch</span>
+            <span class="tech-item">Scikit-learn</span>
+            <span class="tech-item">Keras</span>
+          </div>
+        </div>
+        <div class="tech-category">
+          <h3>Computer Vision</h3>
+          <div class="tech-list">
+            <span class="tech-item">OpenCV</span>
+            <span class="tech-item">YOLO</span>
+            <span class="tech-item">MediaPipe</span>
+            <span class="tech-item">Dlib</span>
+          </div>
+        </div>
+        <div class="tech-category">
+          <h3>IoT</h3>
+          <div class="tech-list">
+            <span class="tech-item">Raspberry Pi</span>
+            <span class="tech-item">Arduino</span>
+            <span class="tech-item">ESP32</span>
+            <span class="tech-item">MQTT</span>
+          </div>
+        </div>
+        <div class="tech-category">
+          <h3>Software</h3>
+          <div class="tech-list">
+            <span class="tech-item">Python</span>
+            <span class="tech-item">C++</span>
+            <span class="tech-item">Node.js</span>
+            <span class="tech-item">React</span>
+            <span class="tech-item">Docker</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Case Studies Section -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Success Stories</h2>
+      <p class="section-subtitle">Real results from real projects</p>
+      <div class="case-studies-grid">
+        <div class="case-study">
+          <div class="case-study-image">
+            <i class="fas fa-chart-bar"></i>
+          </div>
+          <div class="case-study-content">
+            <h3>Manufacturing Optimization</h3>
+            <p>Implemented AI-driven predictive maintenance for a leading automotive manufacturer.</p>
+            <div class="results">
+              <strong>Results:</strong> 40% reduction in downtime, 25% increase in production efficiency
+            </div>
+          </div>
+        </div>
+        <div class="case-study">
+          <div class="case-study-image">
+            <i class="fas fa-hospital"></i>
+          </div>
+          <div class="case-study-content">
+            <h3>Healthcare AI Platform</h3>
+            <p>Developed computer vision system for early disease detection in medical imaging.</p>
+            <div class="results">
+              <strong>Results:</strong> 95% accuracy rate, 60% faster diagnosis times
+            </div>
+          </div>
+        </div>
+        <div class="case-study">
+          <div class="case-study-image">
+            <i class="fas fa-warehouse"></i>
+          </div>
+          <div class="case-study-content">
+            <h3>Smart Warehouse System</h3>
+            <p>Created IoT-based inventory management with real-time tracking and automation.</p>
+            <div class="results">
+              <strong>Results:</strong> 50% reduction in inventory costs, 80% faster order fulfillment
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Us Section -->
+  <section id="about" class="section" style="background: #FFFFFF;">
+    <div class="container">
+      <h2 class="section-title">About RoboNeura</h2>
+      <p class="section-subtitle">Our story, mission, and values</p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-top: 3rem;">
+        <div>
+          <h3 style="color: #0D1B2A; font-size: 1.8rem; margin-bottom: 1.5rem;">Our Mission</h3>
+          <p style="color: #2E2E2E; margin-bottom: 2rem; line-height: 1.8;">
+            To democratize AI and IoT technologies, making cutting-edge solutions accessible to businesses of all sizes. 
+            We believe in the power of intelligent automation to transform industries and improve human lives.
+          </p>
+          <h3 style="color: #0D1B2A; font-size: 1.8rem; margin-bottom: 1.5rem;">Our Vision</h3>
+          <p style="color: #2E2E2E; margin-bottom: 2rem; line-height: 1.8;">
+            To be the leading force in the convergence of hardware precision and software intelligence, 
+            creating a future where technology seamlessly enhances human capabilities.
+          </p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+            <div style="text-align: center; padding: 1.5rem; background: #F5F5F5; border-radius: 12px;">
+              <h4 style="color: #00D1FF; font-size: 2rem; margin-bottom: 0.5rem;">50+</h4>
+              <p style="color: #2E2E2E;">Projects Completed</p>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: #F5F5F5; border-radius: 12px;">
+              <h4 style="color: #00D1FF; font-size: 2rem; margin-bottom: 0.5rem;">25+</h4>
+              <p style="color: #2E2E2E;">Team Members</p>
+            </div>
+          </div>
+        </div>
+        <div style="background: linear-gradient(135deg, #0D1B2A, #1B263B); padding: 3rem; border-radius: 20px; color: #FFFFFF;">
+          <h3 style="color: #00D1FF; margin-bottom: 2rem; font-size: 1.5rem;">Our Values</h3>
+          <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+              <i class="fas fa-lightbulb" style="color: #00D1FF; font-size: 1.5rem;"></i>
+              <div>
+                <h4 style="margin-bottom: 0.5rem;">Innovation</h4>
+                <p style="opacity: 0.9; font-size: 0.9rem;">Pushing boundaries and exploring new possibilities</p>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+              <i class="fas fa-handshake" style="color: #00D1FF; font-size: 1.5rem;"></i>
+              <div>
+                <h4 style="margin-bottom: 0.5rem;">Collaboration</h4>
+                <p style="opacity: 0.9; font-size: 0.9rem;">Working together to achieve extraordinary results</p>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+              <i class="fas fa-award" style="color: #00D1FF; font-size: 1.5rem;"></i>
+              <div>
+                <h4 style="margin-bottom: 0.5rem;">Excellence</h4>
+                <p style="opacity: 0.9; font-size: 0.9rem;">Delivering the highest quality in everything we do</p>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+              <i class="fas fa-heart" style="color: #00D1FF; font-size: 1.5rem;"></i>
+              <div>
+                <h4 style="margin-bottom: 0.5rem;">Impact</h4>
+                <p style="opacity: 0.9; font-size: 0.9rem;">Creating positive change in the world</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Careers Section -->
+  <section id="careers" class="section" style="background: #F5F5F5;">
+    <div class="container">
+      <h2 class="section-title">Join Our Team</h2>
+      <p class="section-subtitle">Build the future with us</p>
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <p style="font-size: 1.25rem; color: #2E2E2E; max-width: 800px; margin: 0 auto;">
+          We're looking for passionate engineers, designers, and innovators who want to make a difference. 
+          Join our team and help shape the future of AI and IoT technology.
+        </p>
+      </div>
+      <div class="solutions-grid">
+        <div class="solution-card">
+          <i class="fas fa-code"></i>
+          <h3>Senior AI Engineer</h3>
+          <p>Lead machine learning projects, develop cutting-edge AI models, and mentor junior engineers.</p>
+          <div style="margin-top: 1rem;">
+            <span style="background: #00D1FF; color: #0D1B2A; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem; font-weight: 500;">Full-time</span>
+          </div>
+        </div>
+        <div class="solution-card">
+          <i class="fas fa-microchip"></i>
+          <h3>IoT Hardware Engineer</h3>
+          <p>Design and develop embedded systems, work with sensors, and create smart device solutions.</p>
+          <div style="margin-top: 1rem;">
+            <span style="background: #00D1FF; color: #0D1B2A; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem; font-weight: 500;">Full-time</span>
+          </div>
+        </div>
+        <div class="solution-card">
+          <i class="fas fa-eye"></i>
+          <h3>Computer Vision Specialist</h3>
+          <p>Develop computer vision algorithms, work with deep learning models, and create visual AI solutions.</p>
+          <div style="margin-top: 1rem;">
+            <span style="background: #00D1FF; color: #0D1B2A; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem; font-weight: 500;">Full-time</span>
+          </div>
+        </div>
+        <div class="solution-card">
+          <i class="fas fa-paint-brush"></i>
+          <h3>UX/UI Designer</h3>
+          <p>Create intuitive user experiences for AI-powered applications and IoT interfaces.</p>
+          <div style="margin-top: 1rem;">
+            <span style="background: #00D1FF; color: #0D1B2A; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem; font-weight: 500;">Full-time</span>
+          </div>
+        </div>
+        <div class="solution-card">
+          <i class="fas fa-rocket"></i>
+          <h3>DevOps Engineer</h3>
+          <p>Build scalable infrastructure, implement CI/CD pipelines, and ensure system reliability.</p>
+          <div style="margin-top: 1rem;">
+            <span style="background: #00D1FF; color: #0D1B2A; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem; font-weight: 500;">Full-time</span>
+          </div>
+        </div>
+        <div class="solution-card">
+          <i class="fas fa-graduation-cap"></i>
+          <h3>Research Intern</h3>
+          <p>Work on cutting-edge research projects in AI, ML, and emerging technologies.</p>
+          <div style="margin-top: 1rem;">
+            <span style="background: #00D1FF; color: #0D1B2A; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem; font-weight: 500;">Internship</span>
+          </div>
+        </div>
+      </div>
+      <div style="text-align: center; margin-top: 3rem;">
+        <h3 style="color: #0D1B2A; margin-bottom: 1rem;">Why Work With Us?</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
+          <div style="background: #FFFFFF; padding: 2rem; border-radius: 16px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+            <i class="fas fa-users" style="color: #00D1FF; font-size: 2rem; margin-bottom: 1rem;"></i>
+            <h4 style="color: #0D1B2A; margin-bottom: 0.5rem;">Collaborative Culture</h4>
+            <p style="color: #2E2E2E; font-size: 0.9rem;">Work with brilliant minds in an open, collaborative environment</p>
+          </div>
+          <div style="background: #FFFFFF; padding: 2rem; border-radius: 16px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+            <i class="fas fa-graduation-cap" style="color: #00D1FF; font-size: 2rem; margin-bottom: 1rem;"></i>
+            <h4 style="color: #0D1B2A; margin-bottom: 0.5rem;">Learning & Growth</h4>
+            <p style="color: #2E2E2E; font-size: 0.9rem;">Continuous learning opportunities and career development</p>
+          </div>
+          <div style="background: #FFFFFF; padding: 2rem; border-radius: 16px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+            <i class="fas fa-globe" style="color: #00D1FF; font-size: 2rem; margin-bottom: 1rem;"></i>
+            <h4 style="color: #0D1B2A; margin-bottom: 0.5rem;">Global Impact</h4>
+            <p style="color: #2E2E2E; font-size: 0.9rem;">Work on projects that make a real difference in the world</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="section contact">
+    <div class="container">
+      <h2 class="section-title" style="color: #FFFFFF;">Get In Touch</h2>
+      <p class="section-subtitle" style="color: #F5F5F5;">Ready to transform your business?</p>
+      <div class="contact-grid">
+        <div class="contact-form">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" placeholder="Your full name">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="your.email@company.com">
+          </div>
+          <div class="form-group">
+            <label for="company">Company</label>
+            <input type="text" id="company" placeholder="Your company name">
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" rows="5" placeholder="Tell us about your project..."></textarea>
+          </div>
+          <button class="btn btn-primary" style="width: 100%;">Send Message</button>
+        </div>
+        <div class="contact-info">
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <div>
+              <h4>Email</h4>
+              <p>hello@roboneura.com</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-phone"></i>
+            <div>
+              <h4>Phone</h4>
+              <p>+1 (555) 123-4567</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <div>
+              <h4>Office</h4>
+              <p>123 Innovation Drive<br>Tech City, TC 12345</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-linkedin"></i>
+            <div>
+              <h4>LinkedIn</h4>
+              <p>linkedin.com/company/roboneura</p>
+            </div>
+          </div>
+          <div style="background: #1B263B; padding: 2rem; border-radius: 16px; margin-top: 2rem;">
+            <h3 style="color: #00D1FF; margin-bottom: 1rem;">We're Hiring!</h3>
+            <p style="color: #F5F5F5; margin-bottom: 1rem;">Join our team of engineers and innovators.</p>
+            <a href="#careers" class="btn btn-primary">View Open Positions</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>RoboNeura</h3>
+          <p>Merging hardware precision with software intelligence to drive digital transformation.</p>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#solutions">Solutions</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Services</h3>
+          <ul>
+            <li><a href="#solutions">AI & Machine Learning</a></li>
+            <li><a href="#solutions">Computer Vision</a></li>
+            <li><a href="#solutions">IoT Systems</a></li>
+            <li><a href="#solutions">Custom Software</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Connect</h3>
+          <ul>
+            <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+            <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+            <li><a href="#"><i class="fab fa-github"></i> GitHub</a></li>
+            <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 RoboNeura. All rights reserved. | <a href="#" style="color: #00D1FF;">Privacy Policy</a> | <a href="#" style="color: #00D1FF;">Terms of Service</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module">
+    import * as THREE from 'https://esm.sh/three@0.153.0';
+    import { OrbitControls } from 'https://esm.sh/three@0.153.0/examples/jsm/controls/OrbitControls.js';
+    import { GLTFLoader } from 'https://esm.sh/three@0.153.0/examples/jsm/loaders/GLTFLoader.js';
+
+    const container = document.getElementById('robot-container');
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x0D1B2A);
+
+    const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+    camera.position.set(0, 1.5, 0.3); // Start very close to the robot
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    container.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.target.set(0, 1, 0);
+    controls.enablePan = false; // Disable panning
+    controls.enableZoom = false; // Disable zooming
+    controls.enableRotate = false; // Disable rotation
+    controls.update();
+
+    // Enhanced lighting
+    const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 1.2);
+    hemiLight.position.set(0, 20, 0);
+    scene.add(hemiLight);
+    
+    const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    dirLight.position.set(3, 10, 10);
+    dirLight.castShadow = true;
+    scene.add(dirLight);
+
+    // Add ambient light for better visibility
+    const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+    scene.add(ambientLight);
+
+    // Add point light for dramatic effect
+    const pointLight = new THREE.PointLight(0x00D1FF, 1, 100);
+    pointLight.position.set(0, 5, 5);
+    scene.add(pointLight);
+
+    let head = null;
+    // Load GLTF
+    const loader = new GLTFLoader();
+    loader.load('model/Untitled.glb', function(gltf) {
+      const model = gltf.scene;
+      scene.add(model);
+      // model.rotation.y = Math.PI; // Rotate to face the camera
+
+      // Center and scale the model
+      const box = new THREE.Box3().setFromObject(model);
+      const size = box.getSize(new THREE.Vector3()).length();
+      const center = box.getCenter(new THREE.Vector3());
+      model.position.x += (model.position.x - center.x) ;
+      model.position.y += (model.position.y - center.y) + 0.7;
+      model.position.z += (model.position.z - center.z);
+      const scale = 2.0 / size;
+      model.scale.set(scale, scale, scale);
+      
+      // Rotate the model 30 degrees around Y axis
+      model.rotation.x = -Math.PI / 10;
+      model.rotation.y = Math.PI / 6; // 30 degrees = π/6 radians
+
+      // Keep original materials and colors from the GLTF model
+      model.traverse((child) => {
+        if (child.isMesh) {
+          // Keep the original material properties from the GLTF file
+          if (child.material) {
+            child.material.needsUpdate = true;
+          }
+        }
+        
+        // Try to find the head mesh or bone
+        if (child.isMesh && child.name.toLowerCase().includes('head')) {
+          head = child;
+          console.log('Found head mesh:', child.name);
+        }
+        // If it's a SkinnedMesh with bones
+        if (child.isBone && child.name.toLowerCase().includes('head')) {
+          head = child;
+          console.log('Found head bone:', child.name);
+        }
+        // If it's a Group that might contain the head
+        if (child.type === 'Group' && child.name.toLowerCase().includes('head')) {
+          head = child;
+          console.log('Found head group:', child.name);
+        }
+      });
+      
+      // If no head found, try to find the first mesh that might be the head
+      if (!head) {
+        model.traverse((child) => {
+          if (child.isMesh && !head) {
+            // Look for meshes that are likely to be the head (higher up in the model)
+            if (child.position.y > 0.5) {
+              head = child;
+              console.log('Using fallback head mesh:', child.name);
+            }
+          }
+        });
+      }
+      
+      // Add eyes to the robot
+      const eyeGeometry = new THREE.SphereGeometry(0.05, 16, 16);
+      const eyeMaterial = new THREE.MeshBasicMaterial({ color: 0x00D1FF }); // Electric cyan eyes
+      
+      // Create left eye
+      const leftEye = new THREE.Mesh(eyeGeometry, eyeMaterial);
+      leftEye.position.set(-0.1, 0.1, 0.2); // Adjust position relative to head
+      head.add(leftEye);
+      
+      // Create right eye
+      const rightEye = new THREE.Mesh(eyeGeometry, eyeMaterial);
+      rightEye.position.set(0.1, 0.1, 0.2); // Adjust position relative to head
+      head.add(rightEye);
+    }, undefined, function(error) {
+      console.error('An error happened loading the GLTF model:', error);
+    });
+
+    // Mouse tracking for head follow
+    let mouse = { x: 0, y: 0 };
+    window.addEventListener('mousemove', (event) => {
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    });
+
+    // Responsive resize
+    window.addEventListener('resize', () => {
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+
+    // Animation variables
+    let animationStartTime = Date.now();
+    let animationDuration = 3000; // 3 seconds
+    let isAnimating = true;
+    const startZ = 0.3; // Starting position (close)
+    const endZ = 1.0; // Final position (current)
+    
+    // Animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+      
+      // Handle zoom animation
+      if (isAnimating) {
+        const elapsed = Date.now() - animationStartTime;
+        const progress = Math.min(elapsed / animationDuration, 1);
+        
+        // Smooth easing function
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        
+        // Interpolate camera position
+        camera.position.z = startZ + (endZ - startZ) * easeOut;
+        
+        // End animation when complete
+        if (progress >= 1) {
+          isAnimating = false;
+        }
+      }
+      
+      // Make head follow cursor
+      if (head) {
+        // Directly map mouse position to rotation
+        head.rotation.y = mouse.x;
+        head.rotation.x = -mouse.y; // Invert so up = look up
+      }
+      
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Intersection Observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observe all cards and sections
+    document.querySelectorAll('.solution-card, .industry-card, .case-study, .tech-category').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
