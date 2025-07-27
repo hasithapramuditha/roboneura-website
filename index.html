@@ -674,6 +674,64 @@
       }
     }
 
+    /* iPad and Tablet Specific Styles */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      /* Navigation adjustments for iPad */
+      .nav-container {
+        padding: 0 1.5rem;
+      }
+
+      .nav-menu {
+        gap: 1.5rem;
+      }
+
+      .nav-menu a {
+        font-size: 0.95rem;
+        padding: 0.5rem 0.75rem;
+      }
+
+      .cta-buttons {
+        gap: 0.75rem;
+      }
+
+      .cta-buttons .btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+      }
+
+      .logo {
+        font-size: 1.3rem;
+      }
+
+      .logo i {
+        font-size: 1.6rem;
+      }
+
+      /* Hero section adjustments */
+      .hero-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5rem;
+      }
+
+      .hero-content h1 {
+        font-size: 2.8rem;
+      }
+
+      .hero-content p {
+        font-size: 1.15rem;
+      }
+
+      .hero-3d {
+        height: 400px;
+      }
+
+      /* Button adjustments for touch */
+      .btn {
+        min-height: 44px;
+        padding: 0.75rem 1.5rem;
+      }
+    }
+
     @media (max-width: 768px) {
       /* Header & Navigation */
       .nav-menu {
@@ -867,6 +925,49 @@
       /* Add visual feedback for touch */
       .btn:active, .solution-card:active {
         background-color: rgba(0, 209, 255, 0.1);
+      }
+    }
+
+    /* iPad-specific optimizations */
+    @media (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
+      /* Portrait iPad adjustments */
+      .nav-menu {
+        gap: 1.2rem;
+      }
+
+      .nav-menu a {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.6rem;
+      }
+
+      .cta-buttons .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+      }
+
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
+      /* Landscape iPad adjustments */
+      .nav-menu {
+        gap: 1.8rem;
+      }
+
+      .nav-menu a {
+        font-size: 1rem;
+        padding: 0.6rem 0.8rem;
+      }
+
+      .cta-buttons .btn {
+        padding: 0.7rem 1.3rem;
+        font-size: 0.95rem;
+      }
+
+      .hero-content h1 {
+        font-size: 3rem;
       }
     }
 

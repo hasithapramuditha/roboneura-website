@@ -14,7 +14,8 @@
     "test": "echo 'No tests configured - add your test framework here'",
     "quality-check": "npm run lint && npm run test",
     "seo-check": "node scripts/seo-check.js",
-    "mobile-test": "node scripts/mobile-test.js"
+    "mobile-test": "node scripts/mobile-test.js",
+    "ipad-test": "node scripts/ipad-test.js"
   },
   "keywords": [
     "ai",
