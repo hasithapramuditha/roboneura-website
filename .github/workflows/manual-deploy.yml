@@ -20,6 +20,11 @@ env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
 jobs:
   manual-deploy:
     runs-on: ubuntu-latest
@@ -110,24 +115,10 @@ jobs:
         echo "deployment_url=https://roboneura-website.vercel.app" >> $GITHUB_OUTPUT
         
     - name: Comment deployment status
-      uses: actions/github-script@v7
-      with:
-        script: |
-          const deploymentUrl = '${{ steps.deploy.outputs.deployment_url }}';
-          const environment = '${{ inputs.environment }}';
-          const message = '${{ inputs.message }}';
-          
-          const comment = `🚀 **${environment.charAt(0).toUpperCase() + environment.slice(1)} Deployment Completed!**
-          
-          📝 **Message:** ${message}
-          🔗 **URL:** ${deploymentUrl}
-          👤 **Triggered by:** @${{ github.actor }}
-          ⏰ **Time:** ${new Date().toISOString()}`;
-          
-          // Create a comment on the commit
-          github.rest.repos.createCommitComment({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            commit_sha: context.sha,
-            body: comment
-          }); 
+      run: |
+        echo "🚀 **${{ inputs.environment }} Deployment Completed!**"
+        echo ""
+        echo "📝 **Message:** ${{ inputs.message }}"
+        echo "🔗 **URL:** https://roboneura-website.vercel.app"
+        echo "👤 **Triggered by:** @${{ github.actor }}"
+        echo "⏰ **Time:** $(date -u +"%Y-%m-%dT%H:%M:%SZ")" 
