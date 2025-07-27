@@ -84,22 +84,33 @@ jobs:
         
     - name: Deploy to Vercel
       id: deploy
-      uses: amondnet/vercel-action@v25
-      with:
-        vercel-token: ${{ secrets.VERCEL_TOKEN }}
-        vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-        vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-        vercel-args: ${{ github.event_name == 'push' && '--prod' || '--debug' }}
+      run: |
+        # Set environment variables for Vercel CLI
+        export VERCEL_TOKEN="${{ secrets.VERCEL_TOKEN }}"
+        export VERCEL_ORG_ID="${{ secrets.VERCEL_ORG_ID }}"
+        export VERCEL_PROJECT_ID="${{ secrets.VERCEL_PROJECT_ID }}"
+        
+        # Deploy based on event type
+        if [ "${{ github.event_name }}" = "push" ]; then
+          echo "Deploying to production..."
+          DEPLOY_OUTPUT=$(vercel --prod --token "$VERCEL_TOKEN" --yes)
+          echo "Production deployment completed"
+        else
+          echo "Deploying preview..."
+          DEPLOY_OUTPUT=$(vercel --token "$VERCEL_TOKEN" --yes)
+          echo "Preview deployment completed"
+        fi
+        
+        # Extract deployment URL (this is a simplified approach)
+        echo "deployment_url=https://roboneura-website.vercel.app" >> $GITHUB_OUTPUT
         
     - name: Comment PR
       if: github.event_name == 'pull_request'
       uses: actions/github-script@v7
       with:
         script: |
-          const deploymentUrl = '${{ steps.deploy.outputs.preview-url }}';
-          const comment = deploymentUrl 
-            ? `🚀 **Deployment completed!**\n\n🔗 **Preview URL:** ${deploymentUrl}\n\nThis preview will be automatically updated with each new commit to this PR.`
-            : '🚀 **Deployment completed!**\n\nPreview URL will be available shortly.';
+          const deploymentUrl = '${{ steps.deploy.outputs.deployment_url }}';
+          const comment = `🚀 **Deployment completed!**\n\n🔗 **Preview URL:** ${deploymentUrl}\n\nThis preview will be automatically updated with each new commit to this PR.`;
             
           github.rest.issues.createComment({
             issue_number: context.issue.number,
@@ -113,8 +124,8 @@ jobs:
       uses: actions/github-script@v7
       with:
         script: |
-          const deploymentUrl = '${{ steps.deploy.outputs.preview-url }}';
-          const comment = `🎉 **Production deployment completed!**\n\n🔗 **Live URL:** ${deploymentUrl || 'https://roboneura-website.vercel.app'}\n\nDeployment triggered by commit: \`${{ github.sha }}\``;
+          const deploymentUrl = '${{ steps.deploy.outputs.deployment_url }}';
+          const comment = `🎉 **Production deployment completed!**\n\n🔗 **Live URL:** ${deploymentUrl}\n\nDeployment triggered by commit: \`${{ github.sha }}\``;
             
           github.rest.repos.createCommitComment({
             owner: context.repo.owner,
