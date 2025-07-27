@@ -4,9 +4,9 @@
   "description": "RoboNeura - Merging Hardware Precision with Software Intelligence",
   "main": "index.html",
   "scripts": {
-    "dev": "npx serve .",
+    "dev": "serve .",
     "build": "echo 'Static site - no build required'",
-    "start": "npx serve .",
+    "start": "serve .",
     "deploy": "vercel --prod",
     "deploy:preview": "vercel",
     "setup": "./scripts/setup-vercel.sh",

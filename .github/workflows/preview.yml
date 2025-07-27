@@ -29,6 +29,9 @@ jobs:
         else
           npm install
         fi
+        
+    - name: Install Vercel CLI
+      run: npm install -g vercel@latest
       
     - name: Run quality checks
       run: |
@@ -57,8 +60,13 @@ jobs:
           exit 1
         fi
         
-        # Add your linting commands here if you have them
-        # npm run lint
+        # Verify Vercel CLI is installed
+        if vercel --version; then
+          echo "✅ Vercel CLI installed successfully"
+        else
+          echo "❌ Vercel CLI installation failed"
+          exit 1
+        fi
         
     - name: Deploy Preview to Vercel
       id: deploy-preview
