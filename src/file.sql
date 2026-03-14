@@ -106,7 +106,7 @@ SELECT
   SUM(price) AS total_revenue
 FROM products
 GROUP BY type,active
-ORDER BY total_revenue DESC
+ORDER BY total_revenue DESC;
 
 SELECT
   type,
@@ -115,7 +115,7 @@ FROM products
 WHERE active = 1
 GROUP BY type
 HAVING total_revenue > 1000
-ORDER BY total_revenue DESC
+ORDER BY total_revenue DESC;
 
 
 -- Conditions
@@ -151,7 +151,7 @@ SELECT
   o.order_date,
   o.total_amount
 FROM customers AS c
-LEFT JOIN orders AS o ON c.customer_id = o.customer_id
+LEFT JOIN orders AS o ON c.customer_id = o.customer_id;
 
 -- Full outer Join
 SELECT *
@@ -160,7 +160,7 @@ LEFT JOIN table2 ON table1.id = table2.id
 UNION
 SELECT *
 FROM table1
-RIGHT JOIN table2 ON table1.id = table2.id
+RIGHT JOIN table2 ON table1.id = table2.id;
 
 -- Views
 CREATE VIEW RegionalRevenueSummary AS 
@@ -253,5 +253,5 @@ END //
 DELIMITER ;
 
 -- Test the trigger:
-UPDATE employees SET salary = 80000.00 WHERE employee_id = 1
+UPDATE employees SET salary = 80000.00 WHERE employee_id = 1;
 SELECT * FROM audit_log;
