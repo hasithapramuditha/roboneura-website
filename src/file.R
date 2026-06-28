@@ -1,3 +1,237 @@
+# ==============================================================================
+#               R CODE CHEATSHEET: DATA VISUALIZATION & PREPROCESSING
+# ==============================================================================
+
+# Load necessary libraries
+library(dplyr)
+library(ggplot2)
+library(maps)
+library(corrplot)
+library(shiny)
+
+
+# ==============================================================================
+# 1. DATA PREPROCESSING & CLEANING
+# ==============================================================================
+
+# --- Handling Missing Values ---
+x <- c(NA, 4, 9, NA, 3, NA)
+is.na(x)                     # Identify missing values (returns TRUE/FALSE)
+na.omit(x)                   # Remove missing values from a vector
+as.vector(na.omit(x))        # Cleaner output for omitted values
+mean(x, na.rm = TRUE)        # Ignore missing values in calculations
+x[is.na(x)] <- 0             # Replace missing values with a specific value (e.g., 0)
+
+# Missing values in Data Frames
+sum(is.na(df))               # Total number of missing values in dataset
+colSums(is.na(df))           # Check missing values in each column
+sum(is.na(df$col_name))      # Identify missing values in a specific column
+No_missing_df <- na.omit(df) # Remove rows with missing values
+
+# Imputation (Replacing NAs in Dataframes)
+df$col_name[is.na(df$col_name)] <- mean(df$col_name, na.rm = TRUE)   # Mean
+df$col_name[is.na(df$col_name)] <- median(df$col_name, na.rm = TRUE) # Median
+df$col_name[is.na(df$col_name)] <- "Unknown"                         # Categorical
+
+# --- Handling Outliers (IQR Method) ---
+Q1 <- quantile(df$col_name, 0.25)
+Q3 <- quantile(df$col_name, 0.75)
+iqr <- IQR(df$col_name)
+lower <- Q1 - 1.5 * iqr
+upper <- Q3 + 1.5 * iqr
+
+# Getting outlier values directly
+outliers <- boxplot(df$col_name)$out 
+
+# Removing outliers
+clean_df <- df[df$col_name >= lower & df$col_name <= upper, ]
+
+# Capping outliers
+df$col_name[df$col_name < lower] <- lower
+df$col_name[df$col_name > upper] <- upper
+
+# --- Data Integration (Joins & Stacking) ---
+# Left Join (keeps all rows from left dataset)
+combined_left <- students %>% left_join(academic, by = "student_id")
+
+# Inner Join (keeps only matching rows)
+combined_inner <- students %>% inner_join(academic, by = "student_id")
+
+# Stacking rows & columns
+stacked_data <- bind_rows(data_1, data_2)     # Vertical (adds rows)
+concatenated_data <- bind_cols(data_3, data_4) # Horizontal (adds columns)
+
+# --- Data Transformation ---
+# Log transformation for highly skewed data
+data_t <- data_t %>% mutate(log_time = log(Time_Minutes))
+
+# Standardization (Z-score: Mean = 0, SD = 1)
+data_t <- data_t %>% mutate(z_score = as.numeric(scale(Exam_Score)))
+
+
+# ==============================================================================
+# 2. DATA VISUALIZATION WITH ggplot2
+# ==============================================================================
+# Basic ggplot2 syntax: ggplot(data, aes(x, y)) + geom_*()
+
+# --- Scatter Plots & Bubble Plots (Numerical vs Numerical) ---
+# Simple scatter plot with fixed color and transparency
+ggplot(bank_data, aes(x = age, y = duration)) +
+  geom_point(color = "#3B82F6", alpha = 0.3) +
+  labs(title = "Call duration vs age", x = "Age", y = "Call duration")
+
+# Scatter plot mapped to a categorical variable (color = y)
+ggplot(bank_data, aes(x = age, y = duration, color = y)) +
+  geom_point(alpha = 0.3) +
+  scale_color_manual(values = c("no" = "#60A5FA", "yes" = "#F97316"))
+
+# Bubble Plot (Adding size mapping)
+ggplot(bank_data, aes(x = age, y = duration, size = campaign, color = y)) +
+  geom_point(alpha = 0.65) +
+  scale_size(range = c(2, 10)) # Adjusts bubble size limits
+
+# --- Bar Charts (Categorical Data) ---
+# Standard Bar Chart (geom_bar automatically counts occurrences)
+ggplot(loan_data, aes(x = Approved)) +
+  geom_bar(fill = "#0D9488", color = "white")
+
+# Column Chart (geom_col for pre-calculated counts)
+job_counts <- bank_data %>% count(job, sort = TRUE)
+ggplot(job_counts, aes(x = reorder(job, -n), y = n)) + # -n for descending sort
+  geom_col(fill = "#14B8A6")
+
+# Horizontal Bar Chart (coord_flip)
+ggplot(job_counts, aes(x = reorder(job, n), y = n)) + # Ascending sort
+  geom_col(fill = "#F97316") +
+  coord_flip()
+
+# Stacked Bar Chart
+ggplot(bank_data, aes(x = education, fill = y)) +
+  geom_bar(color = "white")
+
+# Dodged Bar Chart (Side-by-side)
+ggplot(bank_data, aes(x = education, fill = y)) +
+  geom_bar(position = "dodge", color = "white")
+
+# 100% Stacked Bar Chart (Proportions)
+ggplot(bank_data, aes(x = marital, fill = y)) +
+  geom_bar(position = "fill", color = "white") +
+  scale_y_continuous(labels = scales::percent_format())
+
+# --- Distributions (Numerical Data) ---
+# Histogram (Frequency distribution)
+ggplot(bank_data, aes(x = age)) +
+  geom_histogram(bins = 30, fill = "#14B8A6", color = "white")
+
+# Density Plot (Smoothed distribution)
+ggplot(bank_data, aes(x = age, fill = y)) +
+  geom_density(alpha = 0.35)
+
+# Boxplot (Shows median, quartiles, and outliers)
+ggplot(bank_data, aes(y = age)) +
+  geom_boxplot(fill = "#A7C7E7", width = 0.3)
+
+# Comparative Boxplot
+ggplot(bank_data, aes(x = y, y = age, fill = y)) +
+  geom_boxplot(alpha = 0.85)
+
+# --- Themes, Labels & Exporting ---
+# Formatting titles and axes
+p <- ggplot(bank_data, aes(x = age, y = duration)) +
+  geom_point() +
+  labs(title = "My Plot", x = "Age", y = "Duration") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"), # Center & bold title
+    axis.text.x = element_text(angle = 45, hjust = 1)      # Rotate x-axis labels
+  )
+
+# Exporting / Saving plots
+ggsave(filename = "scatter_plot.png", plot = p, width = 7, height = 5, dpi = 300)
+
+
+# ==============================================================================
+# 3. ADVANCED PLOTS
+# ==============================================================================
+
+# --- Map Visualizations ---
+world <- map_data('world')
+ggplot(world, aes(long, lat, group = group)) +
+  geom_polygon(fill = 'lightblue', color = 'black') +
+  coord_fixed()
+
+# --- Correlograms (Correlation Matrices) ---
+data(mtcars)
+cor_matrix = cor(mtcars)
+
+corrplot(cor_matrix, type = "upper", method = "color", 
+         addCoef.col = "black", number.cex = 0.6, 
+         tl.col = "black", tl.srt = 45)
+
+# --- Heat Maps ---
+ggplot(df, aes(x, y, fill = value)) +
+  geom_tile() +
+  scale_fill_gradient(low = "white", high = "red")
+
+
+# ==============================================================================
+# 4. INTERACTIVE DASHBOARDS WITH R SHINY
+# ==============================================================================
+
+# 1. User Interface (UI) -> What the user sees
+ui <- fluidPage(
+  titlePanel("My First Shiny Dashboard"),
+  
+  sidebarLayout(
+    # Sidebar for Inputs
+    sidebarPanel(
+      selectInput("var_x", "Select Variable:", choices = c("mpg", "disp", "hp")),
+      sliderInput("bins", "Number of bins:", min = 1, max = 50, value = 30)
+    ),
+    
+    # Main Panel for Outputs (Using Tabs)
+    mainPanel(
+      tabsetPanel(
+        tabPanel("Plot", plotOutput("distPlot")),
+        tabPanel("Summary", verbatimTextOutput("summaryData")),
+        tabPanel("Data", dataTableOutput("tableData"))
+      )
+    )
+  )
+)
+
+# 2. Server Logic -> Calculations and generating plots
+server <- function(input, output) {
+  
+  # Render the plot dynamically
+  output$distPlot <- renderPlot({
+    x <- mtcars[[input$var_x]] 
+    bins <- seq(min(x), max(x), length.out = input$bins + 1)
+    hist(x, breaks = bins, col = 'darkgray', border = 'white')
+  })
+  
+  # Render text/summary dynamically
+  output$summaryData <- renderPrint({
+    summary(mtcars[[input$var_x]])
+  })
+  
+  # Render data table
+  output$tableData <- renderDataTable({
+    mtcars
+  })
+}
+
+# 3. Launch the Application
+shinyApp(ui = ui, server = server)
+
+
+
+
+
+
+
+
+
 # =============================================================================
 # DA 3003 — Complete R & ggplot2 Reference Script
 # Covers: Data Preprocessing, Visualization, Advanced Plots
